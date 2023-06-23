@@ -23,7 +23,7 @@ const promptInput = async (pergunta) => {
 const executar = async () => {
   let senhaEspecifica = null;
 
-  const senhaDigitada = await promptInput('Digite uma senha caso queira uma especifica...');
+  const senhaDigitada = await promptInput('Digite uma senha caso quiser uma especifica...');
 
   if (senhaDigitada) {
     senhaEspecifica = senhaDigitada;
