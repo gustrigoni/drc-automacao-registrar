@@ -1,3 +1,7 @@
+import { config } from 'dotenv';
+
+config();
+
 import axios from 'axios';
 import FormData from 'form-data';
 import nodeReadline from 'readline';
@@ -40,9 +44,16 @@ const executar = async () => {
 
     const { data: [ dadoPessoal ]} = await axios.post('https://www.4devs.com.br/ferramentas_online.php', form);
 
+    console.log(dadoPessoal);
+
     const senhaUsuario = senhaEspecifica ?? dadoPessoal.senha;
     const celular = dadoPessoal.celular.replace(' ', '');
-    const dataNascimento = dadoPessoal.data_nasc.split('/').reverse().toString().replaceAll(',', '');
+
+    let dataNascimento = dadoPessoal.data_nasc.split('/').reverse().toString();
+
+    for (let i = 1; i <= dataNascimento.length; i++) {
+      dataNascimento = dataNascimento.replace(',', '');
+    }
 
     const { data: { data }} = await axios.post(`${URL_BFF}/login/create`, {
       mail: dadoPessoal.email,
@@ -76,4 +87,5 @@ const executar = async () => {
   }
 }
 
-executar();
+await executar();
+process.exit(0);
